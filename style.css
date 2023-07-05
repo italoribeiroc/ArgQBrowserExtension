@@ -1,0 +1,11 @@
+body {
+    min-width: 300px;
+}
+
+.center {
+    text-align: center;
+}
+
+ul {
+    text-align: left;
+}
