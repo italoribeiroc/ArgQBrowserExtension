@@ -36,29 +36,55 @@ function classifyTweetsFromPage() {
                 classification = 'Baixa';
             }
 
-            console.log('here');
             if (classification != null){
+                let dropdown = document.createElement('div');
+                dropdown.classList.add('dropdown');
+                dropdown.style.position = 'relative';
+                dropdown.style.display = 'inline-block';
+
                 let button = document.createElement('button');
+                button.classList.add('dropbtn');
                 button.style.backgroundColor = color;
                 button.style.border = 'none';
                 button.style.padding = '5px';
-                button.style.position = 'absolute';
-                button.style.top = '5px';
-                button.style.right = '5px';
                 button.style.borderRadius = '15%';
                 button.textContent = classification;
 
-                button.addEventListener('click', function() {
+                let dropdownContent = document.createElement('div');
+                dropdownContent.classList.add('dropdown-content');
+
+                let highlightButton = document.createElement('button');
+                highlightButton.textContent = 'Mostrar elementos de intensidade';
+                highlightButton.style.backgroundColor = '#EDF2F9';
+                highlightButton.style.border = 'none';
+                highlightButton.style.display = 'none'; 
+
+                highlightButton.addEventListener('click', function() {
                     let randomStart = Math.floor(Math.random() * (textLength + 1));
                     let randomEnd = randomStart + Math.floor(Math.random() * (textLength - randomStart + 1));
 
-                    let highlightedText = text.slice(0, randomStart) + '<span style="background-color: yellow;">' + text.slice(randomStart, randomEnd) + '</span>' + text.slice(randomEnd);
+                    let highlightedText = text.slice(0, randomStart) + '<span style="background-color: LightBlue;">' + text.slice(randomStart, randomEnd) + '</span>' + text.slice(randomEnd);
 
                     textElement.innerHTML = highlightedText;
                     console.log('Button clicked!');
                 });
 
-                element.appendChild(button);
+                let isHighlightVisible = false;
+
+                button.addEventListener('click', function() {
+                    if (isHighlightVisible) {
+                        highlightButton.style.display = 'none'; 
+                        isHighlightVisible = false;
+                    } else {
+                        highlightButton.style.display = 'block'; 
+                        isHighlightVisible = true;
+                    }
+                });
+
+                dropdownContent.appendChild(highlightButton);
+                dropdown.appendChild(button);
+                dropdown.appendChild(dropdownContent);
+                element.appendChild(dropdown);
             }
         }
     });

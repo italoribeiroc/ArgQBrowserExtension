@@ -9,3 +9,9 @@ body {
 ul {
     text-align: left;
 }
+
+classification-btn{
+    border: none;
+    padding: 5px;
+    position: relative;
+}
