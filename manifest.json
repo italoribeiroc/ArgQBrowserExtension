@@ -6,5 +6,11 @@
     "action": {
         "default_popup": "popup.html"
     },
+    "icons": {
+        "16": "./assets/images/argq_favicon.png",
+        "32": "./assets/images/argq_favicon.png",
+        "48": "./assets/images/argq_favicon.png",
+        "128": "./assets/images/argq_favicon.png"
+    },
     "permissions": ["activeTab", "scripting"]
 }

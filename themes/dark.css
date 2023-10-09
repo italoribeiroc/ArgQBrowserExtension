@@ -1,0 +1,32 @@
+/* themes/light.css */
+
+:root {
+    --background-color: #FFFFFF; 
+    --header-background-color: #F7F7F7; 
+    
+    --primary-text-color: #333333; 
+    --secondary-text-color: #888888; 
+    
+    --highlight-color: #68B684; 
+    --icon-color: #BBBBBB; 
+    
+}
+
+body[data-theme="light"] {
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+}
+
+header[data-theme="light"] {
+    background-color: var(--header-background-color);
+}
+
+button[data-theme="light"], 
+a[data-theme="light"] {
+    background-color: var(--highlight-color);
+    color: var(--background-color); 
+}
+
+.icon[data-theme="light"] {
+    fill: var(--icon-color); 
+}
