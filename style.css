@@ -1,5 +1,20 @@
+
+@import 'themes/light.css';
+
 body {
     min-width: 300px;
+    transition: background-color 0.3s ease;
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+}
+
+.icon-spacing {
+    margin-right: 10px; /* Ajuste este valor conforme necessário */
+}
+
+#classifyTweets {
+    width: 100%;
+    margin: 0;
 }
 
 .center {
