@@ -15,3 +15,57 @@ classification-btn{
     padding: 5px;
     position: relative;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    z-index: 9999;
+    border-bottom: 1px dotted lightsteelblue;
+}
+
+.tooltip .tooltiptext {
+visibility: hidden;
+width: 120px;
+background-color: lightsteelblue;
+color: #000;
+text-align: center;
+border-radius: 6px;
+padding: 5px 0;
+position: absolute;
+z-index: 9999;
+top: 150%;
+left: 50%;
+margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+content: "";
+position: absolute;
+bottom: 100%;
+left: 50%;
+z-index: 9999;
+margin-left: -5px;
+border-width: 5px;
+border-style: solid;
+border-color: transparent transparent lightsteelblue transparent;
+}
+
+.tooltip:hover .tooltiptext {
+visibility: visible;
+}
+#dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+#dropbtn {
+    border: none;
+    padding: 5px;
+    border-radius: 15%;
+}
+
+#highlightButton {
+    background-color: #EDF2F9;
+    border: none;
+    display: none;
+}

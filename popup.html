@@ -10,12 +10,29 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         <title>Twitter scrapper</title>
     </head>
-
     <body>
-        <div class="center">
-            <button id="classifyTweets" class="btn btn-primary my-3">Classify tweets</button>
+        <div class="container" style="width: 300px; height: 464px; border: 2px solid #dedede; border-radius: 10px; padding: 20px;">
+            <img src="./assets/argq_logo_gr-escuro.png" alt="Arg Q!" style="width: 60px; height: auto; position: absolute; top: 20px; left: 20px;">
+            <p class="text-center mt-5" style="color: #888888;">Obtenha insights poderosos! Ative a análise de argumentação agora mesmo!</p>
+            
+            <button id="classifyTweets" class="btn btn-success btn-block" style="margin-top: 20px;">Ativar classificação</button>
+            
+            <div class="list-group mt-4">
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Configurações
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Tweets salvos
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Reportar erro
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+            
             <script src="popup.js"></script>
         </div>
-
     </body>
 </html>
