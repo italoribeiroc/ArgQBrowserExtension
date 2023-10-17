@@ -1,11 +1,13 @@
 /* themes/light.css */
 
 :root {
-    --background-color: #FFFFFF; 
+    --background-color: #EDF2F9; 
     --header-background-color: #F7F7F7; 
     
-    --primary-text-color: #333333; 
+    --primary-text-color: #666666; 
     --secondary-text-color: #888888; 
+
+    --secondary-button-color: #88B8C8;
     
     --highlight-color: #68B684; 
     --icon-color: #BBBBBB; 

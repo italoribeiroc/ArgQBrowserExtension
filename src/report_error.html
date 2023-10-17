@@ -18,40 +18,20 @@
             
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <img src="./assets/images/argq_logo_gr-escuro.png" alt="Arg Q!" style="height: 30px;">
-                <a class="icon-link" href="https://github.com/italoribeiroc/ArgQBrowserExtension" target="_blank" style="color: inherit; text-decoration: none;">
+                <a class="icon-link" href="https://argq.org/" target="_blank" style="color: inherit; text-decoration: none;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                 </a>
-            </div>               
-
-            <p class="text-center mt-2">Obtenha insights poderosos! Ative a análise de argumentação agora mesmo!</p>
-            
-            <button id="classifyTweets" class="btn btn-success btn-block" style="margin-top: 20px;">Ativar classificação</button>
-            
-            <div class="list-group mt-4">
-                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="bi bi-gear icon-spacing"></i>
-                        Configurações
-                    </div>
-                    <i class="bi bi-chevron-right"></i>
+            </div>  
+            <div class="d-flex justify-content-between header-container mb-2">
+                <a href="./popup.html" class="back-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="bi bi-folder icon-spacing"></i>
-                        Tweets salvos
-                    </div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="bi bi-exclamation-circle icon-spacing"></i>
-                        Reportar erro
-                    </div>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
+                <h5>Reportar erro</h5>
+                <span style="width: 24px;"></span> 
             </div>
-            
-            <script src="popup.js"></script>
+            <p class="mb-4">Temos o prazer de receber seus comentários! Use o campo abaixo para relatar erros encontrados ou nos fornecer sugestões de melhorias para a extensão.</p>
+            <textarea class="form-control mb-4" rows="6" placeholder="Digite seu feedback aqui..."></textarea>
+            <button class="btn submit-btn w-100 mb-4">Enviar</button>
         </div>
     </body>
 </html>

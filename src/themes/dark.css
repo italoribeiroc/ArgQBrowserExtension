@@ -1,10 +1,10 @@
 /* themes/light.css */
 
 :root {
-    --background-color: #EDF2F9; 
+    --background-color: #FFFFFF; 
     --header-background-color: #F7F7F7; 
     
-    --primary-text-color: #666666; 
+    --primary-text-color: #333333; 
     --secondary-text-color: #888888; 
     
     --highlight-color: #68B684; 
@@ -30,3 +30,4 @@ a[data-theme="light"] {
 .icon[data-theme="light"] {
     fill: var(--icon-color); 
 }
+

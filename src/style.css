@@ -8,6 +8,38 @@ body {
     color: var(--primary-text-color);
 }
 
+.header-container {
+    align-items: center;  /* Alinha verticalmente */
+}
+.header-container h5 {
+    margin: 0;  /* Remove a margem padrão */
+}
+.back-arrow, .spacer {
+    width: 24px;
+    display: flex;
+    align-items: center;  /* Centraliza o ícone verticalmente */
+    justify-content: center;  /* Centraliza o ícone horizontalmente */
+}
+
+.back-arrow {
+    font-size: 1.5em;
+    color: var(--primary-text-color);
+}
+
+.submit-btn {
+    background-color: var(--secondary-button-color);
+    color: white;
+}
+
+.submit-btn:hover,
+.submit-btn:active,
+.submit-btn:focus {
+    background-color: #76A6B8;
+    border-color: #76A6B8;
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
 .icon-spacing {
     margin-right: 10px; /* Ajuste este valor conforme necessário */
 }
