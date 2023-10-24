@@ -1,0 +1,27 @@
+{
+    "name": "ArgQ!",
+    "description": "ArgQ! Browser Extension",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "index.html"
+    },
+    "icons": {
+        "16": "./argq_favicon.png",
+        "32": "./argq_favicon.png",
+        "48": "./argq_favicon.png",
+        "128": "./argq_favicon.png"
+    },
+    "permissions": [
+        "activeTab", 
+        "scripting",
+        "<all_urls>"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net;"
+    }
+}
