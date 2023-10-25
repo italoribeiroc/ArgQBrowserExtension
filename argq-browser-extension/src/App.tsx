@@ -4,17 +4,6 @@ import argqLogo from './assets/images/argq_logo_gr-escuro.png'
 import { Gear, ExclamationCircle, Folder, ChevronRight } from 'react-bootstrap-icons'
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const onclick = async () => {
-  //   const[tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  //   chrome.scripting.executeScript({
-  //     target: { tabId: tab.id! },
-  //     func: () => {
-  //       document.body.style.backgroundColor = "red";
-  //     }
-  //   })
-  // }
-
   return (
     <div className="container" style={{ width: '300px', height: '400px', padding: '20px' }}>
 
