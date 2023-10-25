@@ -1,0 +1,16 @@
+{
+    "name": "Arg Q!",
+    "description": "Arg Q! Browser Extension",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "popup.tsx"
+    },
+    "icons": {
+        "16": "./assets/images/argq_favicon.png",
+        "32": "./assets/images/argq_favicon.png",
+        "48": "./assets/images/argq_favicon.png",
+        "128": "./assets/images/argq_favicon.png"
+    },
+    "permissions": ["activeTab", "scripting"]
+}
