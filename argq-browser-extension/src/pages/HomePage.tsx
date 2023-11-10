@@ -14,7 +14,7 @@ function HomePage() {
         if (tab.id) {
             chrome.scripting.insertCSS({
                 target: {tabId: tab.id},
-                files: ['../App.css'],
+                files: ['/src/App.css'],
             });
 
             chrome.scripting.executeScript({
@@ -38,13 +38,13 @@ function HomePage() {
             </button>
 
             <div className="list-group mt-4">
-                <a href="#" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <Link to="/settings" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <div>
                         <Gear className='icon-spacing'/>
                         Configurações
                     </div>
                     <ChevronRight />
-                </a>
+                </Link>
                 <a href="#" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <div>
                         <Folder className='icon-spacing'/>
@@ -68,6 +68,7 @@ function HomePage() {
 function classifyTweetsFromPage() {
     const tweetElements = document.querySelectorAll('article[role="article"]');
     const tweetArray = Array.from(tweetElements);
+
   
     tweetArray.forEach((element) => {
       const textElement = element.querySelector('div[lang]');
