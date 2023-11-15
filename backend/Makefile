@@ -1,12 +1,11 @@
 PYTHON := python
-MAIN := app.main.py
+MAIN := app.main
 
 env:
-	.\argq\Scripts\Activate.ps1
+	powershell.exe -Command ".\argq\Scripts\Activate.ps1"
 
 install:
-	cd ./app
-	$(PYTHON) -m pip install -r requirements.txt
+	cd ./app && $(PYTHON) -m pip install -r requirements.txt
 
 run:
 	uvicorn $(MAIN):app --reload

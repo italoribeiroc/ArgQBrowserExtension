@@ -1,3 +1,8 @@
 node_modules
 /backend/model.sav
+/backend/model_cpu.sav
 /backend/argq
+**/__pycache__/
+*.pyc
+*.pyo
+
