@@ -15,17 +15,24 @@ Para começar a usar a extensão `Arg Q!` no seu navegador, siga os passos abaix
 1. **Baixe o Projeto**  
    Faça o download ou clone este repositório para o seu computador.
 
-2. **Abra o Gerenciador de Extensões**  
-   No seu navegador, vá até o menu de extensões. Geralmente, isso pode ser encontrado em "Mais ferramentas" > "Extensões", ou simplesmente digitando `chrome://extensions/` na barra de endereços (para navegadores baseados no Chromium, como Google Chrome ou Brave).
+2. **Configure o Backend (FastAPI)**
+   - Entre na pasta `backend`.
+   - Entre em um ambiente virtual Python.
+   - Execute `make install` para instalar as dependências.
+   - Após a instalação, execute `make run` para subir a API.
 
-3. **Modo Desenvolvedor**  
-   Ative o "Modo do desenvolvedor" geralmente localizado no canto superior direito da página de extensões.
+3. **Configure o Frontend (Vite)**
+   - Navegue até a pasta `argq-browser-extension`.
+   - Execute `npm run build` para empacotar a aplicação.
 
-4. **Carregue a Extensão**  
-   Clique no botão "Carregar sem compactação" e selecione a pasta onde você baixou ou clonou este repositório.
+4. **Carregue a Extensão no Navegador**
+   - Abra o Gerenciador de Extensões do seu navegador.
+     - Para navegadores baseados no Chromium (como Google Chrome ou Brave), isso geralmente pode ser encontrado em "Mais ferramentas" > "Extensões", ou digitando `chrome://extensions/` na barra de endereços.
+   - Ative o "Modo do desenvolvedor", geralmente localizado no canto superior direito.
+   - Clique em "Carregar sem compactação" e selecione a pasta `dist` gerada dentro de `argq-browser-extension`.
 
 5. **Pronto para Uso**  
-   Agora, a extensão `Arg Q!` deve aparecer na sua lista de extensões e você pode começar a classificar tweets imediatamente!
+   A extensão `Arg Q!` deve aparecer na sua lista de extensões e você pode começar a classificar tweets imediatamente!
 
 ## Suporte e Contribuição
 

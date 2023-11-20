@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function ReportErrorPage() {
     return (
         <>
-            <div className="d-flex justify-content-between header-container mb-2">
+            <div className="d-flex justify-content-between header-container mb-3">
                 <Link to="/" className="back-arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-arrow-left">
                         <line x1="19" y1="12" x2="5" y2="12"/>
@@ -13,9 +13,19 @@ function ReportErrorPage() {
                 <h5>Reportar erro</h5>
                 <span style={{ width: '24px' }}></span> 
             </div>
+            <div 
+                style={{
+                    backgroundColor: 'white', 
+                    borderRadius: '10px', 
+                    padding: '8px 16px 16px 16px', 
+                }}
+                className=''
+            >
             <p className="mb-4">Temos o prazer de receber seus comentários! Use o campo abaixo para relatar erros encontrados ou nos fornecer sugestões de melhorias para a extensão.</p>
             <textarea className="form-control mb-4" rows={6} placeholder="Digite seu feedback aqui..."></textarea>
-            <button className="btn submit-btn w-100 mb-4">Enviar</button>
+            <button className="btn submit-btn w-100">Enviar</button>
+            </div>
+            <br />
         </>
     )
 }

@@ -1,5 +1,8 @@
-<<<<<<< HEAD
 node_modules
-=======
-node_modules
->>>>>>> 4c6c969ca33017907ff207efb95bb88c49f882c7
+/backend/model.sav
+/backend/model_cpu.sav
+/backend/argq
+**/__pycache__/
+*.pyc
+*.pyo
+
