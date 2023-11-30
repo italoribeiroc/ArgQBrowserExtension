@@ -1,5 +1,5 @@
 node_modules
-/backend/model.sav
+/backend/model*
 /backend/model_cpu.sav
 /backend/argq
 **/__pycache__/

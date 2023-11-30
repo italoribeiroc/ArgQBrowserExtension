@@ -1,4 +1,3 @@
-import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 
@@ -15,16 +14,9 @@ TEST_TEXTS = [
     "Está na hora de exigir o respeito com seriedade, impeachment se faz mais que necessário, ele está tentando rebaixar a Câmara dos Deputados a seu serviço, uma ação judicial enérgica imediata. Ação do Arthur Lira agora, se deixar passar perderá a força",
 ]
 
-TEST_TEXTS_EXPECTED_RESULTS = [
-    0,
-    1,
-    0,
-    2,
-    2,
-    2,
-    2,
-    2
-]
+TEST_TEXTS_EXPECTED_RESULTS = [0, 1, 0, 2, 2, 2, 2, 2]
+
+TEST_TEXTS_EXPECTED_RESULTS_FOR_CLARITY = [2, 1, 2, 1, 2, 2, 2, 2]
 
 class TestMain:
     def test_get_text_classification(self):
@@ -33,3 +25,39 @@ class TestMain:
             response = client.post("/argq/classify", json=tweet)
             assert response.status_code == 200
             assert response.json() == {"classification": TEST_TEXTS_EXPECTED_RESULTS[i]}
+
+    def test_get_text_clarity_classification(self):
+        for i, text in enumerate(TEST_TEXTS):
+            request = {
+                "tweet":{
+                    "text": text
+                },
+                "aspects": [
+                    "clarity"
+                ]
+            }
+            output = {"classification": {"clarity": TEST_TEXTS_EXPECTED_RESULTS_FOR_CLARITY[i]}}
+            response = client.post("/argq/classify/aspects", json=request)
+            assert response.status_code == 200
+            assert response.json() == output
+
+    def test_get_text_all_aspects_classification(self):
+        text = TEST_TEXTS[0]
+        request = {
+            "tweet":{
+                "text": text
+            }
+        }
+        output = {
+            "classification": {
+                "quality": 0,
+                "clarity": 2,
+                "organization": 1,
+                "credibility": 0,
+                "emotional_polarity": 0,
+                "emotional_intensity": 1
+            }
+        }
+        response = client.post("/argq/classify/aspects", json=request)
+        assert response.status_code == 200
+        assert response.json() == output

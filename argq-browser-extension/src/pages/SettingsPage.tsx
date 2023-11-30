@@ -5,7 +5,8 @@ function SettingsPage() {
     const [clareza, setClareza] = useState<boolean>(true);
     const [organizacao, setOrganizacao] = useState<boolean>(true);
     const [credibilidade, setCredibilidade] = useState<boolean>(true);
-    const [apeloEmocional, setApeloEmocional] = useState<boolean>(true);
+    const [apeloEmocionalPolaridade, setApeloEmocionalPolaridade] = useState<boolean>(true);
+    const [apeloEmocionalIntensidade, setApeloEmocionalIntensidade] = useState<boolean>(true);
 
     return (
         <div className="d-flex flex-column" style={{ height: '100%' }}>
@@ -43,8 +44,17 @@ function SettingsPage() {
                         <input className='form-check-input' type="checkbox" checked={credibilidade} onChange={() => setCredibilidade(!credibilidade)} />
                     </div>
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                        <label>Apelo emocional</label>
-                        <input className='form-check-input' type="checkbox" checked={apeloEmocional} onChange={() => setApeloEmocional(!apeloEmocional)} />
+                        <span className="criteria-label">Apelo emocional - Polaridade</span>
+                        <div className="form-check-input-container">
+                            <input className='form-check-input' type="checkbox" checked={apeloEmocionalPolaridade} onChange={() => setApeloEmocionalPolaridade(!apeloEmocionalPolaridade)} />
+                        </div>
+                    </div>
+
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="criteria-label">Apelo emocional - Intensidade</span>
+                        <div className="form-check-input-container">
+                            <input className='form-check-input' type="checkbox" checked={apeloEmocionalIntensidade} onChange={() => setApeloEmocionalIntensidade(!apeloEmocionalIntensidade)} />
+                        </div>
                     </div>
                 </div>
             </div>
