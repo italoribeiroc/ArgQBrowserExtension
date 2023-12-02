@@ -124,7 +124,9 @@ visibility: visible;
     border-radius: 20px;
     width: 48px;
     height: 24px;
-    appearance: none;
+    appearance: none; /* Removes default system styling */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
     outline: none;
     position: relative;
     cursor: pointer;
@@ -152,3 +154,18 @@ visibility: visible;
     background-color: #6fcf97;
 }
 
+/* Estilos adicionais para garantir que o switch e o texto não se afetem mutuamente */
+.criteria-section .d-flex {
+    justify-content: space-between; /* Isso vai manter o texto e o switch alinhados corretamente */
+}
+
+.criteria-label {
+    flex-grow: 1; /* Isso permite que o texto cresça e use espaço disponível, sem afetar o switch */
+    margin-right: 8px; /* Espaço entre o texto e o switch */
+}
+
+.form-check-input-container {
+    position: relative; /* Container para o input de switch que não será afetado pelo texto */
+    width: 48px; /* Largura do switch */
+    height: 24px; /* Altura do switch */
+}

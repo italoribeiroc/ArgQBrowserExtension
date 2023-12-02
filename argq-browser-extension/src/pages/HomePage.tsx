@@ -65,6 +65,17 @@ function HomePage() {
     )
 }
 
+interface ClassificationResponse {
+  classification: {
+      quality: number;
+      clarity: number;
+      organization: number;
+      credibility: number;
+      emotional_polarity: number;
+      emotional_intensity: number;
+  };
+}
+
 function classifyTweetsFromPage() {
     const tweetElements = document.querySelectorAll('article[role="article"]');
     const tweetArray = Array.from(tweetElements);
@@ -118,37 +129,119 @@ function classifyTweetsFromPage() {
     
             const dropdownContent = document.createElement('div');
             dropdownContent.classList.add('dropdown-content');
-    
-            const highlightButton = document.createElement('button');
-            highlightButton.textContent = 'Mostrar elementos de clareza';
-            highlightButton.style.backgroundColor = '#EDF2F9';
-            highlightButton.style.border = 'none';
-            highlightButton.style.display = 'none';
-    
-            highlightButton.addEventListener('click', function () {
-              const textLength = text.length;
-              const randomStart = Math.floor(Math.random() * (textLength + 1));
-              const randomEnd = randomStart + Math.floor(Math.random() * (textLength - randomStart + 1));
-    
-              const highlightedText = text.slice(0, randomStart) + '<span style="background-color: LightBlue;" class="tooltip">' + text.slice(randomStart, randomEnd) + '<span class="tooltiptext">Elemento de clareza</span></span>' + text.slice(randomEnd);
-    
-              textElement.innerHTML = highlightedText;
-              console.log('Button clicked!');
+            dropdownContent.style.backgroundColor = '#EDF2F9';
+            dropdownContent.style.display = 'none';
+            dropdownContent.style.width = '250px';
+            dropdownContent.style.position = 'absolute';
+            dropdownContent.style.right = '0';
+            dropdownContent.style.zIndex = '9999';
+            dropdownContent.style.position = 'fixed';
+
+            const styleSheet = document.createElement("style");
+            styleSheet.type = "text/css";
+            styleSheet.innerText = `
+                .dropdown, .dropdown * {
+                    font-family: 'Roboto', sans-serif !important;
+                }
+                .dropdown .dropdown-content div {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 5px 10px;
+                    margin-top: 5px; // Margem no topo
+                    margin-bottom: 5px; // Margem na base
+                    border-bottom: 1px solid #ccc; // Linha separadora
+                }
+                .dropdown .dropdown-content div:last-child {
+                    border-bottom: none; // Remove a borda do último item
+                }
+                .dropdown .dropdown-content div div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 15%;
+                    text-align: center;
+                    padding: 2px 5px;
+                }
+                .dropdown .dropbtn {
+                    position: relative; // Posicionando o botão para estabelecer um novo contexto de empilhamento
+                    z-index: 2;
+                }
+            
+                .dropdown .dropdown-content {
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1); // Sombra leve para não dominar o design do Twitter
+                    border: 1px solid #ccc; // Borda sutil para o dropdown
+                    z-index: 9999; // Garantindo que o dropdown esteja em um nível alto
+                }
+                
+                // Adicionando borda e separação dos itens do dropdown
+                .dropdown .dropdown-content div {
+                    border-bottom: 1px solid #e1e8ed; // Cor da borda alinhada com o esquema de cores do Twitter
+                    margin: 8px 0; // Margem para separar os itens do dropdown
+                }
+            `;
+            document.head.appendChild(styleSheet);
+
+            button.addEventListener('click', () => {
+                if (!dropdownContent.hasChildNodes()) {
+                    fetch('http://127.0.0.1:8000/argq/classify/aspects', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ tweet: { text } }),
+                    })
+                    .then((response) => response.json())
+                    .then((data: ClassificationResponse) => {
+                        const aspectNames: { [key: string]: string } = {
+                            quality: 'Qualidade geral',
+                            clarity: 'Clareza',
+                            organization: 'Organização',
+                            credibility: 'Credibilidade',
+                            emotional_polarity: 'Apelo Emocional - Polaridade',
+                            emotional_intensity: 'Apelo Emocional - Intensidade'
+                        };
+
+                        Object.entries(data.classification).forEach(([aspect, value]) => {
+                            let displayValue: string;
+                            let backgroundColor: string;
+
+                            if (aspect === 'emotional_polarity') {
+                                displayValue = ['Negativa', 'Neutra', 'Positiva'][value];
+                            } else {
+                                displayValue = ['Baixa', 'Média', 'Alta'][value];
+                            }
+
+                            backgroundColor = ['LightCoral', 'LightGoldenRodYellow', 'LightGreen'][value];
+
+                            const aspectItem = document.createElement('div');
+                            aspectItem.style.display = 'flex';
+                            aspectItem.style.justifyContent = 'space-between';
+                            aspectItem.style.padding = '2px 10px';
+
+                            const aspectName = document.createElement('span');
+                            aspectName.textContent = aspectNames[aspect] || aspect;
+                            aspectItem.appendChild(aspectName);
+
+                            const aspectValue = document.createElement('div');
+                            aspectValue.style.backgroundColor = backgroundColor;
+                            aspectValue.style.borderRadius = '15%';
+                            aspectValue.style.textAlign = 'center'
+                            aspectValue.textContent = displayValue;
+                            aspectValue.style.padding = '2px 5px';
+                            aspectItem.appendChild(aspectValue);
+
+                            dropdownContent.appendChild(aspectItem);
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
             });
-    
-            let isHighlightVisible = false;
-    
-            button.addEventListener('click', function () {
-              if (isHighlightVisible) {
-                highlightButton.style.display = 'none';
-                isHighlightVisible = false;
-              } else {
-                highlightButton.style.display = 'block';
-                isHighlightVisible = true;
-              }
-            });
-    
-            dropdownContent.appendChild(highlightButton);
+
             dropdown.appendChild(button);
             dropdown.appendChild(dropdownContent);
             element.appendChild(dropdown);

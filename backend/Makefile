@@ -11,7 +11,7 @@ run:
 	uvicorn $(MAIN):app --reload
 
 test:
-	$(PYTHON) -m pytest
+	$(PYTHON) -m pytest -vs
 
 clean:
 	find . -type f -name '*.pyc' -delete
