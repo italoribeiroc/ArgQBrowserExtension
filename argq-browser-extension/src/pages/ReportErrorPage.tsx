@@ -1,6 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 function ReportErrorPage() {
+    const [feedback, setFeedback] = useState<string>('');
+    const [resetKey, setResetKey] = useState<number>(0);
+
+    const handleSubmit = (event: React.MouseEvent) => {
+        event.preventDefault();
+        console.log(feedback);
+        setFeedback('');
+        setResetKey(prevKey => prevKey + 1);
+        alert('Feedback enviado com sucesso!');
+    };
+
     return (
         <>
             <div className="d-flex justify-content-between header-container mb-3">
@@ -22,8 +34,8 @@ function ReportErrorPage() {
                 className=''
             >
             <p className="mb-4">Temos o prazer de receber seus comentários! Use o campo abaixo para relatar erros encontrados ou nos fornecer sugestões de melhorias para a extensão.</p>
-            <textarea className="form-control mb-4" rows={6} placeholder="Digite seu feedback aqui..."></textarea>
-            <button className="btn submit-btn w-100">Enviar</button>
+            <textarea key={resetKey} className="form-control mb-4" rows={6} placeholder="Digite seu feedback aqui..." onChange={(e) => setFeedback(e.target.value)}></textarea>
+            <button id="feedback-text" onClick={handleSubmit} className="btn submit-btn w-100">Enviar</button>
             </div>
             <br />
         </>

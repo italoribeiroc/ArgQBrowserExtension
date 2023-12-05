@@ -1,12 +1,19 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSettings } from '../components/SettingsContext';
 
 function SettingsPage() {
-    const [clareza, setClareza] = useState<boolean>(true);
-    const [organizacao, setOrganizacao] = useState<boolean>(true);
-    const [credibilidade, setCredibilidade] = useState<boolean>(true);
-    const [apeloEmocionalPolaridade, setApeloEmocionalPolaridade] = useState<boolean>(true);
-    const [apeloEmocionalIntensidade, setApeloEmocionalIntensidade] = useState<boolean>(true);
+    const {
+        clareza,
+        setClareza,
+        organizacao,
+        setOrganizacao,
+        credibilidade,
+        setCredibilidade,
+        apeloEmocionalPolaridade,
+        setApeloEmocionalPolaridade,
+        apeloEmocionalIntensidade,
+        setApeloEmocionalIntensidade
+    } = useSettings();
 
     return (
         <div className="d-flex flex-column" style={{ height: '100%' }}>
