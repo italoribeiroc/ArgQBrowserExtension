@@ -108,6 +108,7 @@ function classifyTweetsFromPage(
   apeloEmocionalPolaridade: Boolean,
   apeloEmocionalIntensidade: Boolean
 ) {
+  const apiUrl = "https://italoribeiro-argq-api.hf.space";
   const tweetElements = document.querySelectorAll('article[role="article"]');
   const tweetArray = Array.from(tweetElements);
 
@@ -123,7 +124,7 @@ function classifyTweetsFromPage(
         ? textElement.textContent.trim()
         : "";
       const textLength = text.length;
-      fetch("http://127.0.0.1:8000/argq/classify", {
+      fetch(`${apiUrl}/argq/classify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -166,11 +167,11 @@ function classifyTweetsFromPage(
             button.style.cursor = "pointer";
             button.addEventListener(
               "mouseover",
-              () => (button.style.opacity = "0.8")
+              () => (button.style.filter = "brightness(90%)")
             );
             button.addEventListener(
               "mouseout",
-              () => (button.style.opacity = "1")
+              () => (button.style.filter = "brightness(100%)")
             );
 
             const dropdownContent = document.createElement("div");
@@ -195,7 +196,7 @@ function classifyTweetsFromPage(
                     align-items: center;
                     padding: 5px 10px;
                     margin-top: 5px; 
-                    margin-bottom: 5px; 
+                    margin-bottom: 7px; 
                     border-bottom: 1px solid #ccc; 
                 }
                 .dropdown .dropdown-content div:last-child {
@@ -233,7 +234,7 @@ function classifyTweetsFromPage(
                 if (apeloEmocionalPolaridade) aspects.push("emotional_polarity");
                 if (apeloEmocionalIntensidade) aspects.push("emotional_intensity");
 
-                fetch("http://127.0.0.1:8000/argq/classify/aspects", {
+                fetch(`${apiUrl}/argq/classify/aspects`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -294,11 +295,11 @@ function classifyTweetsFromPage(
                         aspectValueButton.style.cursor = "pointer";
                         aspectValueButton.addEventListener(
                           "mouseover",
-                          () => (aspectValueButton.style.opacity = "0.8")
+                          () => (aspectValueButton.style.filter = "brightness(90%)")
                         );
                         aspectValueButton.addEventListener(
                           "mouseout",
-                          () => (aspectValueButton.style.opacity = "1")
+                          () => (aspectValueButton.style.filter = "brightness(100%)")
                         );
                         aspectValueButton.addEventListener(
                           "click",
