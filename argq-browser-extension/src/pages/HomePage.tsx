@@ -80,7 +80,7 @@ function HomePage() {
                 <Link to="/report_error" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <div>
                         <ExclamationCircle className='icon-spacing'/>
-                        Reportar erro
+                        Feedback
                     </div>
                     <ChevronRight />
                 </Link>
@@ -123,7 +123,7 @@ function classifyTweetsFromPage(
       const text = textElement.textContent
         ? textElement.textContent.trim()
         : "";
-      const textLength = text.length;
+      
       fetch(`${apiUrl}/argq/classify`, {
         method: "POST",
         headers: {
@@ -182,7 +182,6 @@ function classifyTweetsFromPage(
 
             dropdownContent.style.left = "0";
             dropdownContent.style.zIndex = "999999";
-            //dropdownContent.style.position = "fixed";
 
             const styleSheet = document.createElement("style");
             styleSheet.type = "text/css";
@@ -301,26 +300,55 @@ function classifyTweetsFromPage(
                           "mouseout",
                           () => (aspectValueButton.style.filter = "brightness(100%)")
                         );
+                        const aspectTexts: { [key: string]: string } = {
+                          clarity: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, clareza...",
+                          organization: "Lorem ipsum dolor sit, amet consectetur adipisicing elit, organização...",
+                          credibility: "Lorem ipsum dolor sit amet consectetur, credibilidade...",
+                          emotional_polarity: "Lorem ipsum dolor, apelo emocional polaridade...",
+                          emotional_intensity: "Lorem ipsum dolor sit, apelo emocional intensidade..."
+                        };
                         aspectValueButton.addEventListener(
                           "click",
                           function () {
-                            const randomStart = Math.floor(
-                              Math.random() * (textLength + 1)
-                            );
-                            const randomEnd =
-                              randomStart +
-                              Math.floor(
-                                Math.random() * (textLength - randomStart + 1)
-                              );
+                            const existingInfo = element.querySelector(".info");
+                            if (existingInfo) {
+                              existingInfo.remove();
+                            }
 
-                            const highlightedText =
-                              text.slice(0, randomStart) +
-                              `<span style="background-color: ${backgroundColor};">` +
-                              text.slice(randomStart, randomEnd) +
-                              "</span>" +
-                              text.slice(randomEnd);
+                            const info = document.createElement("div");
+                            info.style.backgroundColor = backgroundColor;
+                            info.className = "info";
+                            info.style.padding = "10px";
+                            info.style.paddingRight = "5px";
+                            info.style.marginTop = "10px";
+                            info.style.position = "relative";
+                            info.style.fontFamily = "Roboto, sans-serif";
+                            info.textContent = aspectTexts[aspect] || "";
 
-                            textElement.innerHTML = highlightedText;
+                            const closeButton = document.createElement("button");
+                            //closeButton.textContent = "X";
+                            closeButton.style.position = "absolute";
+                            closeButton.style.top = "0";
+                            closeButton.style.right = "0";
+                            closeButton.style.border = "none";
+                            closeButton.style.background = "none";
+                            closeButton.style.cursor = "pointer";
+                            closeButton.style.fontSize = "10px";
+
+                            closeButton.innerHTML = `
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                              </svg>
+                            `;
+
+                            closeButton.addEventListener("click", function() {
+                              info.remove();
+                            });
+                        
+                            info.appendChild(closeButton);
+                            
+                            const parent = textElement.parentNode as Node;
+                            parent.insertBefore(info, textElement.nextSibling);
                           }
                         );
                         aspectItem.appendChild(aspectValueButton);
