@@ -1,39 +1,66 @@
-// import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// // Tipos para os valores do contexto
-// interface SettingsContextType {
-//     clareza: boolean;
-//     setClareza: React.Dispatch<React.SetStateAction<boolean>>;
-//     organizacao: boolean;
-//     setOrganizacao: React.Dispatch<React.SetStateAction<boolean>>;
-//     credibilidade: boolean;
-//     setCredibilidade: React.Dispatch<React.SetStateAction<boolean>>;
-//     apeloEmocionalPolaridade: boolean;
-//     setApeloEmocionalPolaridade: React.Dispatch<React.SetStateAction<boolean>>;
-    
-// }
+interface SettingsContextType {
+    clareza: boolean;
+    setClareza: React.Dispatch<React.SetStateAction<boolean>>;
+    organizacao: boolean;
+    setOrganizacao: React.Dispatch<React.SetStateAction<boolean>>;
+    credibilidade: boolean;
+    setCredibilidade: React.Dispatch<React.SetStateAction<boolean>>;
+    apeloEmocionalPolaridade: boolean;
+    setApeloEmocionalPolaridade: React.Dispatch<React.SetStateAction<boolean>>;
+    apeloEmocionalIntensidade: boolean;
+    setApeloEmocionalIntensidade: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-// // Criação do Contexto com tipos
-// export const SettingsContext = createContext<SettingsContextType | null>(null);
+const defaultState: SettingsContextType = {
+    clareza: true,
+    setClareza: () => {},
+    organizacao: true,
+    setOrganizacao: () => {},
+    credibilidade: true,
+    setCredibilidade: () => {},
+    apeloEmocionalPolaridade: true,
+    setApeloEmocionalPolaridade: () => {},
+    apeloEmocionalIntensidade: true,
+    setApeloEmocionalIntensidade: () => {},
+};
 
-// interface SettingsProviderProps {
-//     children: ReactNode;
-// }
+const SettingsContext = createContext<SettingsContextType>(defaultState);
 
-// export const SettingsProvider: React.FC<SettingsProviderProps> = ({ children }) => {
-//     const [clareza, setClareza] = useState<boolean>(JSON.parse(localStorage.getItem('clareza') || 'true'));
-//     const [organizacao, setOrganizacao] = useState<boolean>(JSON.parse(localStorage.getItem('organizacao') || 'true'));
-//     // ... Outros estados
+export const useSettings = () => useContext(SettingsContext);
 
-//     useEffect(() => {
-//         localStorage.setItem('clareza', JSON.stringify(clareza));
-//         localStorage.setItem('organizacao', JSON.stringify(organizacao));
-//         // ... Outras atualizações
-//     }, [clareza, organizacao /* outros estados */]);
+export const SettingsProvider: React.FC<{children: ReactNode}> = ({ children }) => {
+    const [clareza, setClareza] = useState<boolean>(defaultState.clareza);
+    const [organizacao, setOrganizacao] = useState<boolean>(defaultState.organizacao);
+    const [credibilidade, setCredibilidade] = useState<boolean>(defaultState.credibilidade);
+    const [apeloEmocionalPolaridade, setApeloEmocionalPolaridade] = useState<boolean>(defaultState.apeloEmocionalPolaridade);
+    const [apeloEmocionalIntensidade, setApeloEmocionalIntensidade] = useState<boolean>(defaultState.apeloEmocionalIntensidade);
 
-//     return (
-//         <SettingsContext.Provider value={{ clareza, setClareza, organizacao, setOrganizacao /* outros estados e setters */ }}>
-//             {children}
-//         </SettingsContext.Provider>
-//     );
-// };
+    useEffect(() => {
+        chrome.storage.sync.get([
+            'clareza',
+            'organizacao',
+            'credibilidade',
+            'apeloEmocionalPolaridade',
+            'apeloEmocionalIntensidade'
+            ], (result) => {
+            if (result.clareza !== undefined) setClareza(result.clareza);
+            if (result.organizacao !== undefined) setOrganizacao(result.organizacao);
+            if (result.credibilidade !== undefined) setCredibilidade(result.credibilidade);
+            if (result.apeloEmocionalPolaridade !== undefined) setApeloEmocionalPolaridade(result.apeloEmocionalPolaridade);
+            if (result.apeloEmocionalIntensidade !== undefined) setApeloEmocionalIntensidade(result.apeloEmocionalIntensidade);
+            });
+    }, []);
+
+    // Salvar o estado no Chrome Storage sempre que ele mudar
+    useEffect(() => {
+        chrome.storage.sync.set({ clareza, organizacao, credibilidade, apeloEmocionalPolaridade, apeloEmocionalIntensidade });
+    }, [clareza, organizacao, credibilidade, apeloEmocionalPolaridade, apeloEmocionalIntensidade]);
+
+    return (
+        <SettingsContext.Provider value={{ clareza, setClareza, organizacao, setOrganizacao, credibilidade, setCredibilidade, apeloEmocionalPolaridade, setApeloEmocionalPolaridade, apeloEmocionalIntensidade, setApeloEmocionalIntensidade }}>
+        {children}
+        </SettingsContext.Provider>
+    );
+};
