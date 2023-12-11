@@ -108,6 +108,25 @@ function classifyTweetsFromPage(
   apeloEmocionalPolaridade: Boolean,
   apeloEmocionalIntensidade: Boolean
 ) {
+  const darkModeColors = {
+    high: "DarkGreen",
+    medium: "DarkGoldenRod",
+    low: "DarkRed",
+    background: "#47484A",
+    text: "#E2E8F0",
+    border: "#535457"
+  };
+  const lightModeColors = {
+    high: "LightGreen",
+    medium: "LemonChiffon",
+    low: "LightCoral",
+    background: "#EDF2F9",
+    text: "#47484A",
+    border: "#e1e8ed"
+  }
+  const isDarkMode = document.documentElement.style.colorScheme === 'dark';
+  const colors = isDarkMode ? darkModeColors : lightModeColors;
+
   const apiUrl = "https://italoribeiro-argq-api.hf.space";
   const tweetElements = document.querySelectorAll('article[role="article"]');
   const tweetArray = Array.from(tweetElements);
@@ -138,15 +157,15 @@ function classifyTweetsFromPage(
 
           switch (data.classification) {
             case 2:
-              color = "LightGreen";
+              color = colors.high;
               classification = "Alta";
               break;
             case 1:
-              color = "LightGoldenRodYellow";
+              color = colors.medium;
               classification = "Média";
               break;
             case 0:
-              color = "LightCoral";
+              color = colors.low;
               classification = "Baixa";
               break;
           }
@@ -176,7 +195,7 @@ function classifyTweetsFromPage(
 
             const dropdownContent = document.createElement("div");
             dropdownContent.classList.add("dropdown-content");
-            dropdownContent.style.backgroundColor = "#EDF2F9";
+            dropdownContent.style.backgroundColor = colors.background;
             dropdownContent.style.display = "none";
             dropdownContent.style.width = "250px";
 
@@ -196,7 +215,7 @@ function classifyTweetsFromPage(
                     padding: 5px 10px;
                     margin-top: 5px; 
                     margin-bottom: 7px; 
-                    border-bottom: 1px solid #ccc; 
+                    border-bottom: 1px solid ${colors.border}; 
                 }
                 .dropdown .dropdown-content div:last-child {
                     border-bottom: none;
@@ -213,12 +232,12 @@ function classifyTweetsFromPage(
             
                 .dropdown .dropdown-content {
                     box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-                    border: 1px solid #ccc; 
+                    border: 1px solid ${colors.border}; 
                 }
                 
                 
                 .dropdown .dropdown-content div {
-                    border-bottom: 1px solid #e1e8ed; 
+                    border-bottom: 1px solid ${colors.border}; 
                     margin: 8px 0; 
                 }
             `;
@@ -268,9 +287,9 @@ function classifyTweetsFromPage(
                         }
 
                         backgroundColor = [
-                          "LightCoral",
-                          "LightGoldenRodYellow",
-                          "LightGreen",
+                          colors.low,
+                          colors.medium,
+                          colors.high,
                         ][value];
 
                         const aspectItem = document.createElement("div");
@@ -301,11 +320,11 @@ function classifyTweetsFromPage(
                           () => (aspectValueButton.style.filter = "brightness(100%)")
                         );
                         const aspectTexts: { [key: string]: string } = {
-                          clarity: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, clareza...",
-                          organization: "Lorem ipsum dolor sit, amet consectetur adipisicing elit, organização...",
-                          credibility: "Lorem ipsum dolor sit amet consectetur, credibilidade...",
-                          emotional_polarity: "Lorem ipsum dolor, apelo emocional polaridade...",
-                          emotional_intensity: "Lorem ipsum dolor sit, apelo emocional intensidade..."
+                          clarity: "Este critério avalia se o tweet transmite suas ideias de maneira clara e direta. Uma argumentação clara evita ambiguidades, não deixa dúvidas sobre o que está sendo dito e utiliza uma linguagem acessível para expressar o ponto de vista.",
+                          organization: "Aqui, examinamos a estrutura e a lógica do argumento no tweet. Uma boa organização apresenta as ideias de forma sequencial e coerente, tornando o argumento mais fácil de seguir e entender.",
+                          credibility: "Este critério foca na base factual e na autoridade das informações apresentadas. Um argumento credível é sustentado por fontes confiáveis, dados concretos ou experiências pertinentes, conferindo maior peso à argumentação.",
+                          emotional_polarity: "Avalia como o tweet usa emoções para impactar o leitor. Dependendo da polaridade, pode haver o uso de linguagem positiva para gerar empatia ou negativa para expressar descontentamento ou crítica.",
+                          emotional_intensity: "Este critério observa a força da expressão emocional no tweet. Um apelo emocional intenso pode ser identificado pelo uso de linguagem enfática, exageros ou a expressão de sentimentos fortes, visando provocar uma resposta emocional no leitor."
                         };
                         aspectValueButton.addEventListener(
                           "click",
@@ -326,12 +345,12 @@ function classifyTweetsFromPage(
                             info.textContent = aspectTexts[aspect] || "";
 
                             const closeButton = document.createElement("button");
-                            //closeButton.textContent = "X";
                             closeButton.style.position = "absolute";
                             closeButton.style.top = "0";
                             closeButton.style.right = "0";
                             closeButton.style.border = "none";
                             closeButton.style.background = "none";
+                            closeButton.style.padding = "0";
                             closeButton.style.cursor = "pointer";
                             closeButton.style.fontSize = "10px";
 
