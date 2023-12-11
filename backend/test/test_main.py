@@ -1,5 +1,7 @@
 from fastapi.testclient import TestClient
 from app.main import app
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 client = TestClient(app)
 
@@ -61,3 +63,20 @@ class TestMain:
         response = client.post("/argq/classify/aspects", json=request)
         assert response.status_code == 200
         assert response.json() == output
+
+    def test_post_feedback(self, mocker):
+        test_data = {
+            "email": "test@example.com",
+            "text": "This is a test feedback.",
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+        mocked_collection = mocker.patch('google.cloud.firestore.Client.collection')
+        mocked_collection.return_value.document.return_value.set.return_value = None
+
+        response = client.post("/argq/feedback", json=test_data)
+
+        mocked_collection.assert_called_once()
+
+        assert response.status_code == 200
+        assert response.json() == {"status": "success", "feedback_received": test_data}

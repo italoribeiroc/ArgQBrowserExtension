@@ -16,6 +16,7 @@
         "activeTab", 
         "scripting",
         "<all_urls>",
+        "webRequest",
         "storage"
     ],
     "host_permissions": [
@@ -23,6 +24,6 @@
         "https://*/*"
     ],
     "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net;"
+        "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://italoribeiro-argq-api.hf.space;"
     }
 }

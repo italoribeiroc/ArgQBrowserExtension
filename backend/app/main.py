@@ -1,12 +1,18 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 from model.argq import ArgqClassifier
+from datetime import datetime
+import firebase_admin
+from firebase_admin import credentials, firestore
+import uvicorn
+from os import getenv, path
+
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-app = FastAPI()
+app = FastAPI(title="ArgQ Backend", version="0.0.1")
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,6 +23,12 @@ app.add_middleware(
 )
 
 logging.info("Starting application")
+cred_file_path = path.join(path.dirname(__file__), "../credentials/firebase-adminsdk.json")
+cred = credentials.Certificate(cred_file_path)
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
 logging.info("Loading model..")
 model = ArgqClassifier()
 logging.info("Model loaded")
@@ -27,6 +39,11 @@ class Tweet(BaseModel):
 class TextWithAspects(BaseModel):
     tweet: Tweet
     aspects: list = ["quality", "clarity", "organization", "credibility", "emotional_polarity", "emotional_intensity"]
+
+class FeedbackItem(BaseModel):
+    email: str
+    text: str
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 @app.post("/argq/classify")
 async def get_text_classification(tweet: Tweet):
@@ -43,3 +60,15 @@ async def get_text_classification_by_aspects(request: TextWithAspects):
     return {
         "classification": classification
     }
+
+@app.post("/argq/feedback")
+async def post_feedback(item: FeedbackItem):
+    feedback_data = item.model_dump()
+    now = datetime.now()
+    doc_name = now.strftime("%Y%m%d_%H%M%S")
+    doc_ref = db.collection('feedback').document(doc_name)
+    doc_ref.set(feedback_data)
+    return {"status": "success", "feedback_received": feedback_data}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=int(getenv("PORT", 8000)), reload=True)
