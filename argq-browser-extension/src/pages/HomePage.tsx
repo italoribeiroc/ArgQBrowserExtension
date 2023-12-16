@@ -12,7 +12,6 @@ function HomePage() {
         apeloEmocionalPolaridade,
         apeloEmocionalIntensidade,
     } = useSettings();
-    console.log(clareza, organizacao, credibilidade, apeloEmocionalPolaridade, apeloEmocionalIntensidade);
 
     const classifyTweetsRef = useRef<HTMLButtonElement | null>(null);
 
