@@ -6,10 +6,12 @@ function ReportErrorPage() {
     const [feedback, setFeedback] = useState<string>('');
     const [_feedbackSent, setFeedbackSent] = useState(false);
     const [resetKey, setResetKey] = useState<number>(0);
+    const [isSending, setIsSending] = useState(false);
 
     useEffect(() => {
         const messageListener = (message: any, _sender: any, _sendResponse: any) => {
             if (message.action === "feedbackSent") {
+                setIsSending(false);
                 if (message.success) {
                     alert('Feedback enviado com sucesso!');
                     setFeedbackSent(true);
@@ -31,6 +33,7 @@ function ReportErrorPage() {
 
     const handleSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
+        setIsSending(true);
 
         chrome.runtime.sendMessage({
             action: 'sendFeedback',
@@ -65,7 +68,15 @@ function ReportErrorPage() {
             <p className="mb-4">Temos o prazer de receber seus comentários! Use o campo abaixo para relatar erros encontrados ou nos fornecer sugestões de melhorias para a extensão.</p>
             <input type="email" className="form-control mb-2" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required/>
             <textarea key={resetKey} className="form-control mb-4" rows={6} placeholder="Digite seu feedback aqui..." onChange={(e) => setFeedback(e.target.value)}></textarea>
-            <button id="feedback-text" onClick={handleSubmit} className="btn submit-btn w-100">Enviar</button>
+            <button id="feedback-text" onClick={handleSubmit} className="btn submit-btn w-100" disabled={isSending}>
+                {isSending ? (
+                    <svg className="spinner" viewBox="0 0 50 50">
+                        <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                    </svg>
+                ) : (
+                    "Enviar"
+                )}
+            </button>
             </div>
             <br />
         </>
