@@ -70,13 +70,13 @@ function HomePage() {
                     </div>
                     <ChevronRight />
                 </Link>
-                <a href="#" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              <Link to="/saved_tweets" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <div>
                         <Folder className='icon-spacing'/>
                         Tweets salvos
                     </div>
                     <ChevronRight />
-                </a>
+                </Link>
                 <Link to="/report_error" className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <div>
                         <ExclamationCircle className='icon-spacing'/>

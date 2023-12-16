@@ -5,6 +5,7 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import ReportErrorPage from './pages/ReportErrorPage';
 import SettingsPage from './pages/SettingsPage';
 import HomePage from './pages/HomePage';
+import SavedTweetsPage from './pages/SavedTweetsPage';
 import { SettingsProvider } from './components/SettingsContext';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/report_error" element={<ReportErrorPage />} />
+                  <Route path="/saved_tweets" element={<SavedTweetsPage />} />
               </Routes>
           </div>
       </Router>
