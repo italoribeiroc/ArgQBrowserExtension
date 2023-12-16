@@ -1,6 +1,7 @@
 {
     "name": "ArgQ!",
     "description": "ArgQ! Browser Extension",
+    "default_locale": "pt_BR",
     "version": "1.0.0",
     "manifest_version": 3,
     "action": {
