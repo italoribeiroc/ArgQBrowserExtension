@@ -12,13 +12,12 @@ function HomePage() {
         apeloEmocionalPolaridade,
         apeloEmocionalIntensidade,
     } = useSettings();
-    console.log(clareza, organizacao, credibilidade, apeloEmocionalPolaridade, apeloEmocionalIntensidade);
 
-    const classifyTweetsRef = useRef<HTMLButtonElement | null>(null);
+        const classifyTweetsRef = useRef<HTMLButtonElement | null>(null);
 
-    const handleClassifyClick = async (event: MouseEvent<HTMLButtonElement>) => {
+        const handleClassifyClick = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-
+        
         const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
 
         if (tab.id) {
@@ -320,11 +319,11 @@ function classifyTweetsFromPage(
                           () => (aspectValueButton.style.filter = "brightness(100%)")
                         );
                         const aspectTexts: { [key: string]: string } = {
-                          clarity: "Este critério avalia se o tweet transmite suas ideias de maneira clara e direta. Uma argumentação clara evita ambiguidades, não deixa dúvidas sobre o que está sendo dito e utiliza uma linguagem acessível para expressar o ponto de vista.",
-                          organization: "Aqui, examinamos a estrutura e a lógica do argumento no tweet. Uma boa organização apresenta as ideias de forma sequencial e coerente, tornando o argumento mais fácil de seguir e entender.",
-                          credibility: "Este critério foca na base factual e na autoridade das informações apresentadas. Um argumento credível é sustentado por fontes confiáveis, dados concretos ou experiências pertinentes, conferindo maior peso à argumentação.",
-                          emotional_polarity: "Avalia como o tweet usa emoções para impactar o leitor. Dependendo da polaridade, pode haver o uso de linguagem positiva para gerar empatia ou negativa para expressar descontentamento ou crítica.",
-                          emotional_intensity: "Este critério observa a força da expressão emocional no tweet. Um apelo emocional intenso pode ser identificado pelo uso de linguagem enfática, exageros ou a expressão de sentimentos fortes, visando provocar uma resposta emocional no leitor."
+                          clarity: "<b>Clareza:</b> Este critério avalia se o tweet transmite suas ideias de maneira clara e direta. Uma argumentação clara evita ambiguidades, não deixa dúvidas sobre o que está sendo dito e utiliza uma linguagem acessível para expressar o ponto de vista.",
+                          organization: "<b>Organização:</b> Aqui, examinamos a estrutura e a lógica do argumento no tweet. Uma boa organização apresenta as ideias de forma sequencial e coerente, tornando o argumento mais fácil de seguir e entender.",
+                          credibility: "<b>Credibilidade:</b> Este critério foca na base factual e na autoridade das informações apresentadas. Um argumento credível é sustentado por fontes confiáveis, dados concretos ou experiências pertinentes, conferindo maior peso à argumentação.",
+                          emotional_polarity: "<b>Apelo Emocional - Polaridade:</b> Este critério avalia como o tweet usa emoções para impactar o leitor. Dependendo da polaridade, pode haver o uso de linguagem positiva para gerar empatia ou negativa para expressar descontentamento ou crítica.",
+                          emotional_intensity: "<b>Apelo Emocional - Intensidade:</b> Este critério observa a força da expressão emocional no tweet. Um apelo emocional intenso pode ser identificado pelo uso de linguagem enfática, exageros ou a expressão de sentimentos fortes, visando provocar uma resposta emocional no leitor."
                         };
                         aspectValueButton.addEventListener(
                           "click",
@@ -342,7 +341,7 @@ function classifyTweetsFromPage(
                             info.style.marginTop = "10px";
                             info.style.position = "relative";
                             info.style.fontFamily = "Roboto, sans-serif";
-                            info.textContent = aspectTexts[aspect] || "";
+                            info.innerHTML = aspectTexts[aspect] || "";
 
                             const closeButton = document.createElement("button");
                             closeButton.style.position = "absolute";

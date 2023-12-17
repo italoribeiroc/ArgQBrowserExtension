@@ -1,57 +1,47 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function ReportErrorPage() {
     const [email, setEmail] = useState<string>('');
     const [feedback, setFeedback] = useState<string>('');
-    const [resetKey] = useState<number>(0);
+    const [_feedbackSent, setFeedbackSent] = useState(false);
+    const [resetKey, setResetKey] = useState<number>(0);
+    const [isSending, setIsSending] = useState(false);
+
+    useEffect(() => {
+        const messageListener = (message: any, _sender: any, _sendResponse: any) => {
+            if (message.action === "feedbackSent") {
+                setIsSending(false);
+                if (message.success) {
+                    alert('Feedback enviado com sucesso!');
+                    setFeedbackSent(true);
+                    setFeedback('');
+                    setEmail('');
+                    setResetKey(prevKey => prevKey + 1);
+                } else {
+                    alert('Ocorreu um erro ao enviar o feedback. Por favor, tente novamente mais tarde.');
+                }
+            }
+        };
+
+        chrome.runtime.onMessage.addListener(messageListener);
+
+        return () => {
+            chrome.runtime.onMessage.removeListener(messageListener);
+        };
+    }, []);
 
     const handleSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
+        setIsSending(true);
 
-        const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
-        if (tab.id) {
-            const settings = {
+        chrome.runtime.sendMessage({
+            action: 'sendFeedback',
+            data: {
                 email,
                 feedback
-            };
-    
-            chrome.scripting.executeScript({
-                target: {tabId: tab.id},
-                func: sendFeedback,
-                args: [
-                    settings.email,
-                    settings.feedback
-                ],
-            });
-        }
-        
-
-        // setFeedback('');
-        // setEmail('');
-        // setResetKey(prevKey => prevKey + 1);
-
-        // try {
-        //     console.log(email)
-        //     const response = await fetch('https://italoribeiro-argq-api.hf.space/argq/feedback', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ text: feedback })
-        //     });
-        
-        //     if (!response.ok) {
-        //         alert(`Error: ${response.status}`);
-        //     }
-        //     setFeedback('');
-        //     setEmail('');
-        //     setResetKey(prevKey => prevKey + 1);
-        //     alert('Feedback enviado com sucesso!');
-        // } catch (error) {
-        //     console.log(error)
-        //     alert(`Error: ${error}`);
-        // }
+            }
+        });
     };
 
     return (
@@ -76,38 +66,21 @@ function ReportErrorPage() {
                 className=''
             >
             <p className="mb-4">Temos o prazer de receber seus comentários! Use o campo abaixo para relatar erros encontrados ou nos fornecer sugestões de melhorias para a extensão.</p>
-            <input key={resetKey} type="email" className="form-control mb-2" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required/>
+            <input type="email" className="form-control mb-2" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required/>
             <textarea key={resetKey} className="form-control mb-4" rows={6} placeholder="Digite seu feedback aqui..." onChange={(e) => setFeedback(e.target.value)}></textarea>
-            <button id="feedback-text" onClick={handleSubmit} className="btn submit-btn w-100">Enviar</button>
+            <button id="feedback-text" onClick={handleSubmit} className="btn submit-btn w-100" disabled={isSending}>
+                {isSending ? (
+                    <svg className="spinner" viewBox="0 0 50 50">
+                        <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                    </svg>
+                ) : (
+                    "Enviar"
+                )}
+            </button>
             </div>
             <br />
         </>
     )
-}
-
-function sendFeedback(email: string, feedback: string) {
-    const apiUrl = "https://italoribeiro-argq-api.hf.space";
-    fetch(`${apiUrl}/argq/feedback`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-            text: feedback, // Ajuste conforme a expectativa da API
-            email: email 
-        })
-    })
-    .then(response => {
-        if (response.ok) {
-            alert('Feedback enviado com sucesso!');
-        } else {
-            return response.json().then(data => Promise.reject(data));
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao enviar feedback:', error);
-        alert('Erro ao enviar feedback: ' + (error.detail || 'Detalhe do erro não disponível'));
-    });
 }
 
 

@@ -18,7 +18,8 @@
         "scripting",
         "<all_urls>",
         "webRequest",
-        "storage"
+        "storage",
+        "tabs"
     ],
     "host_permissions": [
         "http://*/*",
@@ -26,5 +27,8 @@
     ],
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://italoribeiro-argq-api.hf.space;"
+    },
+    "background": {
+        "service_worker": "background.js"
     }
 }
