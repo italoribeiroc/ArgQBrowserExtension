@@ -108,17 +108,23 @@ function classifyTweetsFromPage(
   apeloEmocionalIntensidade: Boolean
 ) {
   const darkModeColors = {
-    high: "DarkGreen",
-    medium: "DarkGoldenRod",
-    low: "DarkRed",
+    high: "#28583D",
+    medium: "#253762",
+    low: "#6B130F",
+    highText: "#6EFFC2",
+    mediumText: "#7BB2E4",
+    lowText: "#DD6F83",
     background: "#47484A",
     text: "#E2E8F0",
     border: "#535457"
   };
   const lightModeColors = {
-    high: "LightGreen",
-    medium: "LemonChiffon",
-    low: "LightCoral",
+    high: "#A7D7B3",
+    medium: "#c2d0ef",
+    low: "#F19C98",
+    highText: "#00864E",
+    mediumText: "#1C4F93",
+    lowText: "#932338",
     background: "#EDF2F9",
     text: "#47484A",
     border: "#e1e8ed"
@@ -153,18 +159,22 @@ function classifyTweetsFromPage(
         .then((data) => {
           let color = "white";
           let classification = null;
+          let buttonTextColor = "black";
 
           switch (data.classification) {
             case 2:
               color = colors.high;
+              buttonTextColor = colors.highText;
               classification = "Alta";
               break;
             case 1:
               color = colors.medium;
+              buttonTextColor = colors.mediumText;
               classification = "Média";
               break;
             case 0:
               color = colors.low;
+              buttonTextColor = colors.lowText;
               classification = "Baixa";
               break;
           }
@@ -178,10 +188,11 @@ function classifyTweetsFromPage(
             const button = document.createElement("button");
             button.classList.add("dropbtn");
             button.style.backgroundColor = color;
+            button.style.color = buttonTextColor;
             button.style.border = "none";
             button.style.padding = "5px";
             button.style.borderRadius = "15%";
-            button.textContent = classification;
+            button.innerHTML = "<b>" + classification + "</b>";
             button.style.cursor = "pointer";
             button.addEventListener(
               "mouseover",
@@ -276,6 +287,7 @@ function classifyTweetsFromPage(
                       ([aspect, value]) => {
                         let displayValue: string;
                         let backgroundColor: string;
+                        let buttonTextColor: string;
 
                         if (aspect === "emotional_polarity") {
                           displayValue = ["Negativa", "Neutra", "Positiva"][
@@ -291,6 +303,12 @@ function classifyTweetsFromPage(
                           colors.high,
                         ][value];
 
+                        buttonTextColor = [
+                          colors.lowText,
+                          colors.mediumText,
+                          colors.highText,
+                        ][value];
+
                         const aspectItem = document.createElement("div");
                         aspectItem.style.display = "flex";
                         aspectItem.style.justifyContent = "space-between";
@@ -304,9 +322,10 @@ function classifyTweetsFromPage(
                           document.createElement("button");
                         aspectValueButton.style.backgroundColor =
                           backgroundColor;
+                        aspectValueButton.style.color = buttonTextColor;
                         aspectValueButton.style.borderRadius = "15%";
                         aspectValueButton.style.textAlign = "center";
-                        aspectValueButton.textContent = displayValue;
+                        aspectValueButton.innerHTML = "<b>" + displayValue + "</b>";
                         aspectValueButton.style.padding = "2px 5px";
                         aspectValueButton.style.border = "none";
                         aspectValueButton.style.cursor = "pointer";
@@ -320,10 +339,10 @@ function classifyTweetsFromPage(
                         );
                         const aspectTexts: { [key: string]: string } = {
                           clarity: "<b>Clareza:</b> Este critério avalia se o tweet transmite suas ideias de maneira clara e direta. Uma argumentação clara evita ambiguidades, não deixa dúvidas sobre o que está sendo dito e utiliza uma linguagem acessível para expressar o ponto de vista.",
-                          organization: "<b>Organização:</b> Aqui, examinamos a estrutura e a lógica do argumento no tweet. Uma boa organização apresenta as ideias de forma sequencial e coerente, tornando o argumento mais fácil de seguir e entender.",
-                          credibility: "<b>Credibilidade:</b> Este critério foca na base factual e na autoridade das informações apresentadas. Um argumento credível é sustentado por fontes confiáveis, dados concretos ou experiências pertinentes, conferindo maior peso à argumentação.",
+                          organization: "<b>Organização:</b> Este critério explora a estrutura e a lógica do argumento no tweet. Uma boa organização apresenta as ideias de forma sequencial e coerente, tornando o argumento mais fácil de seguir e entender.",
+                          credibility: "<b>Credibilidade:</b> Este critério foca na base factual e na autoridade das informações apresentadas. Um argumento credível é sustentado por fontes confiáveis, posicionamentos precisos, dados concretos ou experiências pertinentes, conferindo maior peso à argumentação.",
                           emotional_polarity: "<b>Apelo Emocional - Polaridade:</b> Este critério avalia como o tweet usa emoções para impactar o leitor. Dependendo da polaridade, pode haver o uso de linguagem positiva para gerar empatia ou negativa para expressar descontentamento ou crítica.",
-                          emotional_intensity: "<b>Apelo Emocional - Intensidade:</b> Este critério observa a força da expressão emocional no tweet. Um apelo emocional intenso pode ser identificado pelo uso de linguagem enfática, exageros ou a expressão de sentimentos fortes, visando provocar uma resposta emocional no leitor."
+                          emotional_intensity: "<b>Apelo Emocional - Intensidade:</b> Este critério avalia a força da expressão emocional no tweet. Um apelo emocional intenso pode ser identificado pelo uso de linguagem enfática, exageros ou a expressão de sentimentos fortes, visando provocar uma resposta emocional no leitor."
                         };
                         aspectValueButton.addEventListener(
                           "click",
