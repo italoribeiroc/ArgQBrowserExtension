@@ -2,7 +2,7 @@
     "name": "ArgQ!",
     "description": "ArgQ! Browser Extension",
     "default_locale": "pt_BR",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "manifest_version": 3,
     "action": {
         "default_popup": "index.html"
@@ -14,16 +14,15 @@
         "128": "./argq_favicon.png"
     },
     "permissions": [
-        "activeTab", 
         "scripting",
-        "<all_urls>",
         "webRequest",
         "storage",
         "tabs"
     ],
     "host_permissions": [
-        "http://*/*",
-        "https://*/*"
+        "https://italoribeiro-argq-api.hf.space/*",
+        "https://twitter.com/*",
+        "https://x.com/*"
     ],
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://italoribeiro-argq-api.hf.space;"
